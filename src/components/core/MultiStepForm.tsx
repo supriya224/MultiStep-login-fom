@@ -7,6 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { MainLayout } from '../../layouts';
 
+// I have create interface to Define types for personal and address information
 type PersonalInfo = {
   name: string;
   email: string;
@@ -21,7 +22,7 @@ type AddressInfo = {
 };
 
 const MultiStepForm: React.FC = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); // State to manage the current step of the form
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
     name: '',
     email: '',
@@ -33,8 +34,9 @@ const MultiStepForm: React.FC = () => {
     state: '',
     zip: '',
   });
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<any>({}); // State to manage validation errors
 
+  // Load saved data from local storage when the component mounts
   useEffect(() => {
     const savedPersonalInfo = localStorage.getItem('personalInfo');
     const savedAddressInfo = localStorage.getItem('addressInfo');
@@ -42,17 +44,20 @@ const MultiStepForm: React.FC = () => {
     if (savedAddressInfo) setAddressInfo(JSON.parse(savedAddressInfo));
   }, []);
 
+  // Save data to local storage whenever it will be change
   useEffect(() => {
     localStorage.setItem('personalInfo', JSON.stringify(personalInfo));
     localStorage.setItem('addressInfo', JSON.stringify(addressInfo));
   }, [personalInfo, addressInfo]);
 
+  // Function to handle the "Next" button click
   const handleNext = () => {
     if (validate()) setStep((prev) => prev + 1);
   };
-
+  // Function to handle the "Back" button click
   const handleBack = () => setStep((prev) => prev - 1);
 
+  // Function to validate the current step's inputs
   const validate = () => {
     const newErrors: any = {};
     if (step === 1) {
@@ -72,6 +77,7 @@ const MultiStepForm: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Function to handle form submission
   const handleSubmit = () => {
     if (validate()) {
       alert('Form submitted!');
@@ -104,7 +110,7 @@ const MultiStepForm: React.FC = () => {
               </button>
             </div>
           </div>
-          {/* button div */}
+          {/* buttons */}
           <div className="flex justify-center gap-3 mb-4">
             <button
               type="button"
@@ -271,6 +277,7 @@ const MultiStepForm: React.FC = () => {
             </div>
           )}
           {step === 3 && (
+            // save all information
             <div>
               <h3 className="text-xl font-bold mb-4">Confirmation</h3>
               <div className="mb-4">
