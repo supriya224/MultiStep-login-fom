@@ -103,7 +103,7 @@ const MultiStepForm: React.FC = () => {
               </button>
               <button
                 type="button"
-                className="px-4 py-2 text-indigo-500  rounded-xl"
+                className="px-4 py-2 text-purple-500  rounded-xl"
                 onClick={step === 3 ? handleSubmit : handleNext}
               >
                 {step === 3 ? 'Submit' : 'Next'}
